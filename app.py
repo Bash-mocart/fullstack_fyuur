@@ -117,20 +117,18 @@ def show_venue(venue_id):
   data = {}# TODO: replace with real venue data from the venues table, using venue_id
   try:
     venue=Venue.query.get(venue_id)
-    data={
-    "id": venue.id,
-    "name": venue.name,
-    "genres": venue.genres,
-    "address":venue.address,
-    "city": venue.city,
-    "state": venue.state,
-    "phone": venue.phone,
-    "website": venue.website_link,
-    "facebook_link": venue.facebook_link,
-    "seeking_talent": venue.seeking_talent,
-    "seeking_description": venue.seeking_description,
-    "image_link": venue.venue_image_link,
-  }
+    data['id']= venue.id
+    data['name'] = venue.name
+    data['genres'] = venue.genres
+    data['address'] = venue.address
+    data['city'] = venue.city
+    data['state'] = venue.state
+    data['phone'] = venue.phone
+    data['website'] = venue.website_link
+    data['facebook_link'] = venue.facebook_link
+    data['seeking_talent'] = venue.seeking_talent
+    data['seeking description'] = venue.seeking_description
+    data['image_link'] = venue.venue_image_link
     data["past_shows"]= []
     data['upcoming_shows'] = []
 
