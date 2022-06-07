@@ -66,23 +66,29 @@ def venues():
   data=[]
   error = False
   try:
-    states = db.session.query(Venue.city, Venue.state).group_by(Venue.city).group_by(Venue.state).all()
+    states = Venue.query.with_entities(Venue.state, Venue.city).group_by(Venue.city, Venue.state).all()
     for state in states:
       states_dict = {}
-      states_dict['city'] = state[0]
-      states_dict['state'] = state[1]
       states_dict['venues'] = []
+      states_dict['state'] = state[0]
+      states_dict['city'] = state[1]
       venues = Venue.query.filter_by(city=states_dict['city'], state=states_dict['state']).all()
-      for venue in venues:
-        states_dict['venues'].append({ 
-          'id' : venue.id,
-          'name' : venue.name,
-          "num_upcoming_shows": len([show for show in venue.artists if show.start_time < datetime.now()]),
-        })
+      for ven in venues:
+        venue = {}
+        venue['id'] = ven.id
+        venue['name'] = ven.name
+        shows = []
+        for show in ven.artists:
+          if show.start_time < datetime.now():
+            shows.append(show)
+          else:
+            pass
+        venue['num_upcoming_show'] = len(shows)
+        states_dict['venues'].append(venue)
       data.append(states_dict)
   except:
     error=True
-    print(sys.exc_info)
+    print(sys.exc_info())
   finally:
     db.session.close()
   flash_message(error=error, success="Venues loaded successfully", fail='Venues could not be loaded')
