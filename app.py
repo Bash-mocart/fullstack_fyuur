@@ -213,7 +213,7 @@ def create_venue_submission():
       facebook_link= request.form.get('facebook_link')
       website_link= request.form.get('website_link')
       seeking_description= request.form.get('seeking_description')
-      seeking_talent= request.form.get('seeking_talent')
+      seeking_talent= request.form.get('seeking_talent') 
 
       new_venue = Venue(name=name, 
         city=city, 
@@ -313,8 +313,8 @@ def show_artist(artist_id):
 
   for venue in shows_query_incoming:
     dict = {}
-    dict['artist_id']= venue[0]
-    dict['artist_name']= venue[1]
+    dict['venue_id']= venue[0]
+    dict['venue_name']= venue[1]
     dict['venue_image_link']= venue[2]
     dict['start_time'] = str(venue[3])
     data['upcoming_shows'].append(dict)
